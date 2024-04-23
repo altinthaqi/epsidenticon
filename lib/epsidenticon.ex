@@ -7,6 +7,7 @@ defmodule Epsidenticon do
     |> filter_odd_squares
     |> build_pixel_map
     |> draw_image
+    |> save_image(input)
   end
 
   def hash_input(input) do
@@ -75,5 +76,14 @@ defmodule Epsidenticon do
     end)
 
     :egd.render(image)
+  end
+
+  def save_image(image, input) do
+    unix = DateTime.to_unix(DateTime.utc_now())
+    dir = "identicons/#{input}-#{unix}.png"
+
+    with :ok <- File.mkdir_p(Path.dirname(dir)) do
+      File.write(dir, image)
+    end
   end
 end
