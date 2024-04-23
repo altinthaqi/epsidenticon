@@ -26,5 +26,7 @@ epsidenticon-*.tar
 /tmp/
 
 *.beam
+
 /config/*.secret.exs
+
 .elixir_ls/
