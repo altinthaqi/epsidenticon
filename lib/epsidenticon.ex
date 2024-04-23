@@ -4,6 +4,7 @@ defmodule Epsidenticon do
     |> hash_input
     |> pick_color
     |> build_grid
+    |> filter_odd_squares
   end
 
   def hash_input(input) do
@@ -37,5 +38,14 @@ defmodule Epsidenticon do
       _ ->
         nil
     end
+  end
+
+  def filter_odd_squares(%Epsidenticon.Image{grid: grid} = image) do
+    grid =
+      Enum.filter(grid, fn {code, _index} ->
+        rem(code, 2) == 0
+      end)
+
+    %Epsidenticon.Image{image | grid: grid}
   end
 end
