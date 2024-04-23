@@ -18,10 +18,15 @@ defmodule Epsidenticon do
     %Epsidenticon.Image{image | color: {r, g, b}}
   end
 
-  def build_grid(%Epsidenticon.Image{hex: hex_list}) do
-    hex_list
-    |> Enum.chunk_every(3)
-    |> Enum.map(&mirrow_row/1)
+  def build_grid(%Epsidenticon.Image{hex: hex_list} = image) do
+    grid =
+      hex_list
+      |> Enum.chunk(3)
+      |> Enum.map(&mirrow_row/1)
+      |> List.flatten()
+      |> Enum.with_index()
+
+    %Epsidenticon.Image{image | grid: grid}
   end
 
   def mirrow_row(row) do
